@@ -40,17 +40,15 @@ input,textarea{caret-color:var(--accent)}
 .entry-panel .section-title>.icon-button{width:44px;min-height:44px}
 .entry-panel.is-collapsed .section-title h2>button{font-size:14px}
 .time-shortcuts{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:4px;margin-block:8px}
+.entry-time-end .time-shortcuts{justify-content:flex-start;row-gap:0}
+.time-duration-shortcuts{display:flex;flex-wrap:wrap;gap:4px;max-width:100%}
 .time-shortcuts button{background:transparent;color:var(--accent);font-size:11px;min-width:44px;min-height:44px;padding:0}
 .time-shortcuts button>span{background:#f2f2fa;border-radius:6px;padding:4px 6px;line-height:1.2;white-space:nowrap}
 .time-shortcuts button:hover>span{background:#e8e8f6}
 .time-shortcuts button:disabled{cursor:default}
-.time-relative-group{border:1px solid var(--line);border-radius:9px;margin-bottom:16px;overflow:hidden}
-.time-helper-toggle{width:100%;min-height:44px;justify-content:space-between;padding:10px 12px;font-size:13px;color:var(--accent)}
-.time-helper-toggle[aria-expanded=true]{background:#eeedfb}
-.time-helper-toggle:focus-visible{outline-offset:-3px}
-.time-helper-toggle[aria-expanded=true] svg{transform:rotate(180deg)}
-.time-options{border:0;border-top:1px solid var(--line);margin:0;padding:12px;min-width:0;background:#f7f7fb}
+.time-options{border:1px solid var(--line);border-radius:9px;margin:0;padding:12px;min-width:0;background:#f7f7fb}
 .time-helper-modes,.time-helper-presets{display:flex;gap:8px;margin-bottom:12px}
+.time-helper-presets{gap:4px}
 .time-helper-modes button{flex:1;min-width:0;font-size:13px;border:1px solid var(--line);padding:10px 8px}
 .time-helper-presets button{flex:1;min-width:44px;padding:8px 4px;font-size:13px}
 .time-helper-modes button[aria-pressed=true],.time-helper-presets button[aria-pressed=true]{background:#eeedfb;color:var(--accent)}
@@ -75,8 +73,14 @@ input,textarea{caret-color:var(--accent)}
 .entry-undo li{margin-block:12px}
 .entry-undo button{border:1px solid var(--line);width:100%}
 .entry-time-heading .icon-button{width:44px;min-height:44px}
-.entry-date-choices{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.entry-date-choices>button{min-height:44px;font-size:13px;padding:8px 12px;border:1px solid var(--line)}
+.entry-date-choices{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.entry-date-actions{display:flex;align-items:center;gap:6px;max-width:100%}
+.entry-date-choices>button,.entry-date-actions>button{min-width:44px;min-height:44px;font-size:13px;padding:8px;border:1px solid var(--line)}
+.entry-date-choices>button{padding-inline:5px}
+.entry-date-actions>.time-helper-toggle{flex-shrink:0;gap:2px;padding-inline:4px;font-size:12px;color:var(--accent)}
+.entry-date-actions svg{flex:none}
+.time-helper-toggle[aria-expanded=true]{background:#eeedfb;border-color:#a6a8d8}
+.time-helper-toggle[aria-expanded=true] svg{transform:rotate(180deg)}
 .entry-date-choices [aria-pressed=true],.entry-other-date.is-selected{background:#eeedfb;color:var(--accent);border-color:#a6a8d8}
 .entry-other-date{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;min-height:44px;border:1px solid var(--line);border-radius:9px;padding:8px;font-size:12px;cursor:pointer}
 .entry-other-date input{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);opacity:0;margin:0!important;cursor:pointer;padding:0}
@@ -93,7 +97,7 @@ input,textarea{caret-color:var(--accent)}
 .wheel-visual [data-rwp-highlight-wrapper]{color:var(--accent);background:#eeedfb;font-size:20px;font-weight:650}
 .time-wheel-colon{align-self:center;text-align:center;font-size:20px;color:var(--muted)}
 .time-wheel[aria-disabled=true]{overflow-y:hidden;pointer-events:none;opacity:.55}
-.empty-entry-time{width:100%;justify-content:flex-start;border:1px solid var(--line);font-size:13px;font-weight:400}
+.empty-entry-time{justify-content:flex-start;font-weight:400}
 .entry-save-footer{position:sticky;bottom:var(--entry-keyboard,0px);z-index:4;background:var(--surface);border-top:1px solid var(--line);padding:12px 0 max(12px,env(safe-area-inset-bottom));margin-top:16px}
 .entry-save-footer .notice{margin-bottom:8px}
 #manual-entry{scroll-padding-bottom:100px}

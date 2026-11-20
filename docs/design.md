@@ -66,12 +66,16 @@ Other activities retain optional End controls without this checkbox.
 
 Start shortcuts offer Now, 15min ago, and Last end.
 Last end uses the latest past endpoint and excludes the edited record.
-End shortcuts offer Now, 5min total, 10min total, and 15min total.
+End shortcuts offer Now, 10min ago, 15min ago, 10min total, and 15min total.
+Ago shortcuts calculate from the time of the tap.
 Duration shortcuts calculate from Start and replace End.
-Relative time groups its mode, presets, Minutes wheel, dated preview, and Set action.
+Relative time is next to the calendar, or next to Add end time when End is empty.
+The relative controls replace the clock wheels while open.
+They group the mode, presets, Minutes wheel, dated preview, and Set action.
 The Minutes wheel ranges from 0 through 120.
 Only one helper opens at a time. Manual time changes close it.
-Set changes one draft field. It does not save or change the opposite field.
+Set changes one draft field, closes the relative controls, and returns focus to Relative time.
+Save submits the draft.
 
 Save stays in the form footer with keyboard and safe-area clearance.
 Long actions show a small spinner on the active button and expose aria-busy.
@@ -151,6 +155,8 @@ Check those behaviors on an iPhone and iPad before claiming device support for a
 | Undo | Failed receipt storage preserves the entry version and prior Undo receipt. |
 | Pending actions | One active spinner, disabled conflicting actions, and visible errors after failure. |
 | End | Retries preserve the key, payload, timestamp, version, and Undo receipt. |
+| Time picker | Check shortcut offsets at midnight, focus after Set, and calendar placement with a custom date at 320px. |
+| Relative time | Check both hidden clock wheels, an empty optional End, and Save with an unapplied relative choice. |
 | Availability | Failed or malformed checks, timeouts, late session responses, navigation, retained drafts, and enlarged labels. |
 | Recording | Invalid WAV chunks, cancellation, provider failure, and legacy URLs without provider authorization. |
 

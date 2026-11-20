@@ -18,9 +18,11 @@ test('rollers update hours and minutes directly with yesterday and no calendar o
  await saveEntry(page);const [entry]=await (await request.get('/api/entries')).json();expect(entry.startAt).toBe('2026-11-10T11:31:00.000Z');expect(entry.endAt).toBeNull();
 });
 
-test('tapping and scrolling select the centered value and manual changes close relative helpers',async({page})=>{
+test('tapping and scrolling select the centered value after closing relative time',async({page})=>{
  const minute=page.getByRole('listbox',{name:'Start minute',exact:true});
- await page.getByRole('button',{name:'Start relative time',exact:true}).click();
+ const toggle=page.getByRole('button',{name:'Start relative time',exact:true});
+ await toggle.click();await expect(minute).toBeHidden();
+ await toggle.click();await expect(minute).toBeVisible();
  const box=(await minute.boundingBox())!;await minute.click({position:{x:box.width/2,y:77}});await expect(page.locator('#start-helper')).toBeHidden();
  await expectEntryTime(page,'start','2026-11-11T13:31');
  await minute.focus();for(let i=0;i<4;i++)await page.keyboard.press('ArrowDown');
@@ -142,12 +144,12 @@ test('relative minutes include both limits and Set applies their selection insid
  await expect(page.locator('#start-helper').getByLabel('Hours',{exact:true})).toHaveCount(0);
  await wheel.focus();await page.keyboard.press('Home');await page.keyboard.press('ArrowUp');
  await expect(wheel).toHaveAttribute('aria-activedescendant','Start-relative-minutes-0');
- await expect(page.getByRole('button',{name:'Set start',exact:true})).toBeEnabled();
+ await expect(page.getByRole('button',{name:'Set start time',exact:true})).toBeEnabled();
  await page.keyboard.press('End');await page.keyboard.press('ArrowDown');await expect(wheel).toHaveAttribute('aria-activedescendant','Start-relative-minutes-120');
- const panel=page.locator('#start-helper');await expect(panel.getByRole('button',{name:'Set start',exact:true})).toBeVisible();
+ const panel=page.locator('#start-helper');await expect(panel.getByRole('button',{name:'Set start time',exact:true})).toBeVisible();
  await page.getByLabel('Notes').focus();
  await page.screenshot({path:info.outputPath('sticky-set.png')});
- await wheel.press('Home');for(let i=0;i<70;i++)await wheel.press('ArrowDown');await page.getByRole('button',{name:'Set start',exact:true}).click();
+ await wheel.press('Home');for(let i=0;i<70;i++)await wheel.press('ArrowDown');await page.getByRole('button',{name:'Set start time',exact:true}).click();
  await expectEntryTime(page,'start','2026-11-11T12:20');
  await expect(panel).toBeHidden();
  expect(await (await request.get('/api/entries')).json()).toEqual([]);
@@ -156,10 +158,10 @@ test('relative minutes include both limits and Set applies their selection insid
 test('zero Ago and 120 minutes Duration apply exact times without saving',async({page,request})=>{
  await page.getByRole('button',{name:'Start relative time',exact:true}).click();
  const start=page.getByRole('listbox',{name:'Start relative minutes',exact:true});await start.focus();await page.keyboard.press('Home');
- await page.getByRole('button',{name:'Set start',exact:true}).click();await expectEntryTime(page,'start','2026-11-11T13:30');
+ await page.getByRole('button',{name:'Set start time',exact:true}).click();await expectEntryTime(page,'start','2026-11-11T13:30');
  await showEndTime(page);await page.getByRole('button',{name:'End relative time',exact:true}).click();
  const end=page.getByRole('listbox',{name:'End relative minutes',exact:true});await end.focus();await page.keyboard.press('End');
- await page.getByRole('button',{name:'Set end',exact:true}).click();await expectEndTime(page,'2026-11-11T15:30');
+ await page.getByRole('button',{name:'Set end time',exact:true}).click();await expectEndTime(page,'2026-11-11T15:30');
  expect(await (await request.get('/api/entries')).json()).toEqual([]);
  await saveEntry(page);const [entry]=await (await request.get('/api/entries')).json();
  expect(entry.startAt).toBe('2026-11-11T12:30:17.123Z');expect(entry.endAt).toBe('2026-11-11T14:30:17.123Z');
@@ -171,11 +173,11 @@ test('the inline Set remains reachable while Save keeps keyboard clearance',asyn
  });
  await page.getByRole('button',{name:'Hide entry form',exact:true}).click();await page.getByRole('button',{name:'Add an entry',exact:true}).click();
  await showEndTime(page);await page.getByRole('button',{name:'End relative time',exact:true}).click();await page.getByRole('button',{name:'Start relative time',exact:true}).click();
- await expect(page.getByRole('button',{name:'Set end',exact:true})).toHaveCount(0);
+ await expect(page.getByRole('button',{name:'Set end time',exact:true})).toHaveCount(0);
  await page.getByLabel('Notes').focus();
  await page.evaluate(()=>{const viewport=(window as any).keyboardViewport;viewport.height=440;viewport.offsetTop=60;viewport.dispatchEvent(new Event('resize'));});
  await expect(page.locator('#entry-form')).toHaveCSS('--entry-keyboard','300px');
- for(const name of ['Set start','Save entry']){
+ for(const name of ['Set start time','Save entry']){
   const button=page.getByRole('button',{name,exact:true});
   await button.scrollIntoViewIfNeeded();
   await expect.poll(()=>button.evaluate(element=>{const b=element.getBoundingClientRect();return b.top>=60&&b.bottom<=500&&element.contains(document.elementFromPoint(b.x+b.width/2,b.y+b.height/2));})).toBe(true);

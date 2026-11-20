@@ -22,6 +22,8 @@ The browser polls shared records every ten seconds while visible.
 It prevents overlapping entry requests and refreshes when the page becomes visible.
 Entries stay in memory. The selected date filters those entries without another entry request.
 Date changes fetch only dated daily checks. Cached checks stay disabled until revalidation.
+A confirmed daily check save starts a fresh read if its selected day still needs revalidation.
+The new read supersedes any older pending read for that day.
 Entry, task, and daily check failures update independently.
 Background refresh keeps loaded entries and Latest Care visible.
 It preserves drafts, selected dates, and chart interaction state during refreshes.
